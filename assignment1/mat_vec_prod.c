@@ -104,6 +104,7 @@ int main(int argc, char **argv) {
         times = 10000;    
         fprintf(stdout, "Running  %d by default and taking average.\n", times);
         fprintf(stdout, "It can also be run as: ./mat_vev_prod <times>.\n", times);
+        fprintf(stdout, "\n");
     }
     double *matrix_ptr, *vector_ptr, *prod_result_ptr;
     double l2_norm;
