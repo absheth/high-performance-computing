@@ -1,4 +1,4 @@
-CC = gcc
+CC = gcc 
 CCFLAGS =
 TIMEDEF =
 MHZ =
@@ -10,5 +10,9 @@ mat_vec_prod.o : mat_vec_prod.c
 clean :
 	rm -f $(OBJ)
 	rm -f mat_vec_prod
+	rm -f *.xf 
+	rm -f *.ap2 
+	rm -f *.apa 
+	rm -f  *+pat 
 kill :
 	rm -f mat_vec_prod $(OBJ)

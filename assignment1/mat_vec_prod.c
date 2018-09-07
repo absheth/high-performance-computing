@@ -78,8 +78,8 @@ void mat_vec_product(double **matrix_ptr, double **vector_ptr, double **prod_res
     gettimeofday(&end, NULL);
     
     
-    fprintf(stdout, "Start | sec: %d, usec %d \n", start.tv_sec, start.tv_usec);
-    fprintf(stdout, "End | sec: %d, usec %d \n", end.tv_sec, end.tv_usec);
+    // fprintf(stdout, "Start | sec: %d, usec %d \n", start.tv_sec, start.tv_usec);
+    // fprintf(stdout, "End | sec: %d, usec %d \n", end.tv_sec, end.tv_usec);
     
     double time_taken = ((end.tv_sec + end.tv_usec*1.0e-6) - (start.tv_sec + start.tv_usec*1.0e-6))/(1.0*times);
     for (i = 0; i < row; i++) {
@@ -100,9 +100,10 @@ int main(int argc, char **argv) {
     int i, j, times;
     if (argc > 1) {
         times = atoi(argv[1]);
-        fprintf(stdout, "Input --> %d\n", times);
     } else {
-        times = 1;    
+        times = 10000;    
+        fprintf(stdout, "Running  %d by default and taking average.\n", times);
+        fprintf(stdout, "It can also be run as: ./mat_vev_prod <times>.\n", times);
     }
     double *matrix_ptr, *vector_ptr, *prod_result_ptr;
     double l2_norm;
