@@ -55,7 +55,7 @@ void get_vector(double **vector_ptr, int column) {
     }
 }
 
-mat_vec_product(double **matrix_ptr, double **vector_ptr, double **prod_result_ptr, double *l2_norm, int row, int column, int times) {
+void mat_vec_product(double **matrix_ptr, double **vector_ptr, double **prod_result_ptr, double *l2_norm, int row, int column, int times) {
     
     struct timeval start, end;
     
@@ -100,10 +100,9 @@ int main(int argc, char **argv) {
     int i, j, times;
     if (argc > 1) {
         times = atoi(argv[1]);
-        
         fprintf(stdout, "Input --> %d\n", times);
     } else {
-        times = 1000;    
+        times = 1;    
     }
     double *matrix_ptr, *vector_ptr, *prod_result_ptr;
     double l2_norm;
