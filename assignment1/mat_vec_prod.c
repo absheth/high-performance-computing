@@ -55,7 +55,7 @@ void get_vector(double **vector_ptr, int column) {
     }
 }
 
-mat_vec_product(double **matrix_ptr, double **vector_ptr, double **prod_result_ptr, double *l2_norm, int row, int column) {
+mat_vec_product(double **matrix_ptr, double **vector_ptr, double **prod_result_ptr, double *l2_norm, int row, int column, int times) {
     
     struct timeval start, end;
     
@@ -63,38 +63,48 @@ mat_vec_product(double **matrix_ptr, double **vector_ptr, double **prod_result_p
     double sum = 0.0, prod_sum = 0.0; 
      
     *prod_result_ptr = (double *) malloc(sizeof(double) * row);
-    memset(*prod_result_ptr, 0, row * sizeof(double));
     
-    int x = gettimeofday(&start, NULL);
-    for (i = 0; i < row; i++) {
-        for(j = 0; j < column; j++) { 
-             *(*prod_result_ptr + i) += *(*matrix_ptr + i * column + j) * *(*vector_ptr + j);
+    int x;
+    gettimeofday(&start, NULL);
+    for (x = 0; x < times; x++) {
+        
+        memset(*prod_result_ptr, 0, row * sizeof(double));
+        for (i = 0; i < row; i++) {
+            for(j = 0; j < column; j++) { 
+                *(*prod_result_ptr + i) += *(*matrix_ptr + i * column + j) * *(*vector_ptr + j);
+            }
         }
     }
-    int y = gettimeofday(&end, NULL);
+    gettimeofday(&end, NULL);
     
-    fprintf(stdout, "x: %d\n", x);
-    fprintf(stdout, "y: %d\n", y);
     
-    fprintf(stdout, "Start | sec: %e, usec %e \n", start.tv_sec, start.tv_usec);
-    fprintf(stdout, "End | sec: %e, usec %e \n", end.tv_sec, end.tv_usec);
+    fprintf(stdout, "Start | sec: %d, usec %d \n", start.tv_sec, start.tv_usec);
+    fprintf(stdout, "End | sec: %d, usec %d \n", end.tv_sec, end.tv_usec);
     
-    double time_taken = (end.tv_sec + end.tv_usec*1.0e-6) - (start.tv_sec + start.tv_usec*1.0e-6);
+    double time_taken = ((end.tv_sec + end.tv_usec*1.0e-6) - (start.tv_sec + start.tv_usec*1.0e-6))/(1.0*times);
     for (i = 0; i < row; i++) {
         sum += pow(*(*prod_result_ptr + i), 2.0);
          
     } 
     *l2_norm = sqrt(sum);
     fprintf(stdout, "l2_norm : %lf \n", *l2_norm);
-    fprintf(stdout, "time_taken: %e \n", time_taken);
+    fprintf(stdout, "time_taken: %lf \n", time_taken);
     fprintf(stdout, "FLOPS: %lf \n", (2*row*column)/(time_taken*1000000.0));
     
 }
 
-int main(void) {
+int main(int argc, char **argv) {
+      
     fprintf(stdout, "\n");
-    fprintf(stdout, "This is main method\n");
-    int i, j;
+    // fprintf(stdout, "Argc --> %d\n", argc);
+    int i, j, times;
+    if (argc > 1) {
+        times = atoi(argv[1]);
+        
+        fprintf(stdout, "Input --> %d\n", times);
+    } else {
+        times = 1000;    
+    }
     double *matrix_ptr, *vector_ptr, *prod_result_ptr;
     double l2_norm;
     int row, column;
@@ -106,7 +116,7 @@ int main(void) {
     get_vector(&vector_ptr, column);
 
     // Peform calculations
-    mat_vec_product(&matrix_ptr, &vector_ptr, &prod_result_ptr, &l2_norm, row, column);
+    mat_vec_product(&matrix_ptr, &vector_ptr, &prod_result_ptr, &l2_norm, row, column, times);
     fprintf(stdout, "\n");
     
     // fprintf(stdout, "Rows: %d | ", row);
