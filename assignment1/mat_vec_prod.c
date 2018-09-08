@@ -88,7 +88,7 @@ void mat_vec_product(double **matrix_ptr, double **vector_ptr, double **prod_res
     }
     *l2_norm = sqrt(sum);
     fprintf(stdout, "l2_norm : %lf \n", *l2_norm);
-    fprintf(stdout, "time_taken: %lf \n", time_taken);
+    fprintf(stdout, "time_taken in seconds: %lf \n", time_taken);
     fprintf(stdout, "megaFLOPS: %lf \n", (2*row*column)/(time_taken*1000000.0));
 
 }
