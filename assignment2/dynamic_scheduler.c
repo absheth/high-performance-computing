@@ -4,7 +4,7 @@
 #define N 1000000
 
 int main (int argc, char *argv[]) {
-    int i, k;
+    // int i, k;
     int nthreads, threadid, i; 
     double a[N], b[N], result[N];
 
