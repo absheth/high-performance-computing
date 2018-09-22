@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
-#define N 1000000
+// #define N 28 
 
 int main (int argc, char *argv[]) {
-    // int i, k;
+    const int N = 28; 
     int nthreads, threadid, i; 
     double a[N], b[N], result[N];
 
@@ -14,7 +14,7 @@ int main (int argc, char *argv[]) {
         b[i] = 2.0 * i;    
     }
 
-    int chunk = 7;
+    int chunk = 4;
 #pragma omp parallel private(threadid)
 { //fork
     threadid = omp_get_thread_num();

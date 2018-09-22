@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <omp.h>
-#define N 1000000
+#define N 100
 int main () {
     int i, k;
     float a[N], b[N];
@@ -15,7 +15,7 @@ int main () {
 
 #pragma omp parallel 
 {
-#pragma omp for reduction(+:dot_prod)
+#pragma omp for // reduction(+:dot_prod)
     for (i = 0; i < N; i++) {
         dot_prod = dot_prod + a[i] * b[i];
         // printf("i: %d\n", i);
