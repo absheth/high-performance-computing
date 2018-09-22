@@ -14,7 +14,7 @@ int main (int argc, char *argv[]) {
         b[i] = 2.0 * i;    
     }
 
-    int chunk = 4;
+    int chunk = 7;
 #pragma omp parallel private(threadid)
 { //fork
     threadid = omp_get_thread_num();
